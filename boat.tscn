@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://kqrl86tposvs"]
+
+[ext_resource type="Texture2D" uid="uid://bjsxuawgdd037" path="res://boat.png" id="1_annr2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_annr2"]
+size = Vector2(719.5, 206)
+
+[node name="Boat" type="CharacterBody2D"]
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_annr2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.25, 1)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_annr2")
+
+[node name="BoatRopeMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-174, -46)

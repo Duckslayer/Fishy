@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://bnhg0r1hnnkic"]
+
+[ext_resource type="Texture2D" uid="uid://c5me4vlodbcrq" path="res://harpoon.png" id="1_mrewk"]
+[ext_resource type="Script" uid="uid://b2y3h86fla48l" path="res://harpoon.gd" id="1_yxyyu"]
+[ext_resource type="Texture2D" uid="uid://bx7ipix1pbgbw" path="res://kenney_fish-pack_2/Vector/bubble_b.svg" id="3_0v313"]
+[ext_resource type="Texture2D" uid="uid://d0kcbpob7gvpj" path="res://kenney_fish-pack_2/Vector/bubble_c.svg" id="4_njfb7"]
+
+[sub_resource type="Curve" id="Curve_0v313"]
+_data = [Vector2(0.021526419, 0.42201173), 0.0, 0.0, 0, 0, Vector2(0.2994129, 0.7015307), 0.0, 0.0, 0, 0, Vector2(0.8688845, 0.014577389), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_njfb7"]
+curve = SubResource("Curve_0v313")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yxyyu"]
+particle_flag_disable_z = true
+angle_min = -389.6
+angle_max = 25.500011
+direction = Vector3(0, -1, 0)
+spread = 76.111
+initial_velocity_max = 41.18
+gravity = Vector3(0, -50, 0)
+scale_min = 0.02
+scale_max = 0.19999999
+scale_curve = SubResource("CurveTexture_njfb7")
+color = Color(1, 1, 1, 0.43529412)
+
+[sub_resource type="Curve" id="Curve_axc4k"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, -0.72941184), 0.0, 0.0, 0, 0, Vector2(0.15876779, 0.8705883), 0.0, 0.0, 0, 0, Vector2(0.41232228, -0.7058823), 0.0, 0.0, 0, 0, Vector2(0.6374408, 0.49411774), 0.0, 0.0, 0, 0, Vector2(0.84123224, -0.30588222), 0.0, 0.0, 0, 0, Vector2(0.936019, 0.75294125), 0.0, 0.0, 0, 0, Vector2(1, -0.2588234), 0.0, 0.0, 0, 0]
+point_count = 7
+
+[sub_resource type="CurveTexture" id="CurveTexture_xehqc"]
+curve = SubResource("Curve_axc4k")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xvvr8"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(600, 1, 1)
+initial_velocity_max = 10.0
+orbit_velocity_min = -0.019999906
+orbit_velocity_max = 0.020000096
+orbit_velocity_curve = SubResource("CurveTexture_xehqc")
+gravity = Vector3(0, -30, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+color = Color(1, 1, 1, 0.45882353)
+turbulence_noise_strength = 0.1
+turbulence_noise_scale = 1.0
+
+[node name="Harpoon" type="CharacterBody2D"]
+script = ExtResource("1_yxyyu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mrewk")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(0, 24)
+polygon = PackedVector2Array(0, 7, 7, 1, 7, -5, -7, -5, -7, 2)
+
+[node name="TrailBubblesParticles" type="GPUParticles2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+position = Vector2(0, 21)
+emitting = false
+amount = 15
+texture = ExtResource("3_0v313")
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_yxyyu")
+
+[node name="LargeBubbles" type="GPUParticles2D" parent="."]
+position = Vector2(0, 356)
+amount = 50
+texture = ExtResource("4_njfb7")
+lifetime = 20.0
+preprocess = 10.0
+process_material = SubResource("ParticleProcessMaterial_xvvr8")
+
+[node name="HarpoonRopeMarker" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -30)

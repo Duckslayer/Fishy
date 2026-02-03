@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://7tankufgnxmc"]
+
+[ext_resource type="PackedScene" uid="uid://c7ynbor0h533n" path="res://background.tscn" id="2_7jktm"]
+[ext_resource type="PackedScene" uid="uid://kqrl86tposvs" path="res://boat.tscn" id="2_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://bnhg0r1hnnkic" path="res://harpoon.tscn" id="2_feb5d"]
+[ext_resource type="Script" uid="uid://ciibhp5qrh5o1" path="res://rope.gd" id="4_fc0e3"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("2_7jktm")]
+unique_name_in_owner = true
+position = Vector2(423, -731.3157)
+scale = Vector2(0.5, 0.5)
+
+[node name="Boat" parent="." instance=ExtResource("2_fc0e3")]
+position = Vector2(565, -19)
+
+[node name="Harpoon" parent="." instance=ExtResource("2_feb5d")]
+unique_name_in_owner = true
+position = Vector2(565, 50)
+
+[node name="Camera2D" type="Camera2D" parent="Harpoon"]
+
+[node name="Rope" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(0.33102924, 0.24277017, 0.07761017, 1)
+script = ExtResource("4_fc0e3")
+boat_marker_path = NodePath("../Boat/BoatRopeMarker")
+harpoon_marker_path = NodePath("../Harpoon/HarpoonRopeMarker")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -5
+offset_left = -103.0
+offset_top = -784.0
+offset_right = 1330.0
+offset_bottom = 4.0
+color = Color(0.09019608, 1, 1, 1)
+
+[editable path="Boat"]
+[editable path="Harpoon"]

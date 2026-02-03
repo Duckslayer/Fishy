@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://c7ynbor0h533n"]
+
+[ext_resource type="Shader" uid="uid://boyf1ekclrwts" path="res://background.gdshader" id="1_oabld"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i7s6n"]
+shader = ExtResource("1_oabld")
+shader_parameter/top_color = Color(0, 0.5, 1, 1)
+shader_parameter/bottom_color = Color(0, 0, 0.2, 1)
+shader_parameter/harpoon_y = 0.0
+
+[node name="Background" type="Node2D"]
+
+[node name="WaterCanvas" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="WaterRect" type="ColorRect" parent="WaterCanvas"]
+material = SubResource("ShaderMaterial_i7s6n")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
