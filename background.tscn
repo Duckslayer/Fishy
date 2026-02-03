@@ -23,6 +23,7 @@ shader_parameter/wave_amplitude = 0.02
 shader_parameter/wave_frequency = 10.0
 shader_parameter/wave_speed = 2.0
 shader_parameter/surface_level = 0.5
+shader_parameter/global_depth = 0.0
 
 [node name="Background" type="Node2D"]
 

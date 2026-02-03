@@ -13,11 +13,11 @@ position = Vector2(423, -731.3157)
 scale = Vector2(0.5, 0.5)
 
 [node name="Boat" parent="." instance=ExtResource("2_fc0e3")]
-position = Vector2(589, 307)
+position = Vector2(589, -30)
 
 [node name="Harpoon" parent="." instance=ExtResource("2_feb5d")]
 unique_name_in_owner = true
-position = Vector2(580, 318)
+position = Vector2(572, -25)
 
 [node name="Camera2D" type="Camera2D" parent="Harpoon"]
 

@@ -29,7 +29,7 @@ func handle_diving(delta):
 	move_and_slide()
 	
 	# Condition 1: Max depth safety check (example)
-	if global_position.y > 2000:
+	if global_position.y > 20000:
 		return_to_boat()
 
 func handle_retracting(delta):
