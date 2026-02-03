@@ -17,7 +17,7 @@ func _physics_process(delta: float) -> void:
 		State.RETRACTING:
 			handle_retracting(delta)
 			
-	%Background.get_node("WaterCanvas/WaterRect").material.set_shader_parameter("harpoon_y", global_position.y)
+	#%Background.get_node("WaterCanvas/WaterRect").material.set_shader_parameter("harpoon_y", global_position.y)
 
 func handle_idle_input():
 	if Input.is_action_just_pressed("ui_accept"):

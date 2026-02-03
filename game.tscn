@@ -13,11 +13,11 @@ position = Vector2(423, -731.3157)
 scale = Vector2(0.5, 0.5)
 
 [node name="Boat" parent="." instance=ExtResource("2_fc0e3")]
-position = Vector2(565, -19)
+position = Vector2(589, 307)
 
 [node name="Harpoon" parent="." instance=ExtResource("2_feb5d")]
 unique_name_in_owner = true
-position = Vector2(565, 50)
+position = Vector2(580, 318)
 
 [node name="Camera2D" type="Camera2D" parent="Harpoon"]
 
@@ -27,14 +27,6 @@ default_color = Color(0.33102924, 0.24277017, 0.07761017, 1)
 script = ExtResource("4_fc0e3")
 boat_marker_path = NodePath("../Boat/BoatRopeMarker")
 harpoon_marker_path = NodePath("../Harpoon/HarpoonRopeMarker")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-z_index = -5
-offset_left = -103.0
-offset_top = -784.0
-offset_right = 1330.0
-offset_bottom = 4.0
-color = Color(0.09019608, 1, 1, 1)
 
 [editable path="Boat"]
 [editable path="Harpoon"]
