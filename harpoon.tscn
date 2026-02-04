@@ -24,6 +24,7 @@ scale_min = 0.02
 scale_max = 0.19999999
 scale_curve = SubResource("CurveTexture_njfb7")
 color = Color(1, 1, 1, 0.43529412)
+collision_mode = 2
 
 [sub_resource type="Curve" id="Curve_axc4k"]
 _limits = [-2.0, 2.0, 0.0, 1.0]
@@ -46,8 +47,11 @@ gravity = Vector3(0, -30, 0)
 scale_min = 0.099999994
 scale_max = 0.5
 color = Color(1, 1, 1, 0.45882353)
+hue_variation_min = -0.19000001
+hue_variation_max = -2.2351742e-08
 turbulence_noise_strength = 0.1
 turbulence_noise_scale = 1.0
+collision_mode = 2
 
 [node name="Harpoon" type="CharacterBody2D"]
 script = ExtResource("1_yxyyu")
