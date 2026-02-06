@@ -27,6 +27,7 @@ position = Vector2(508, -109)
 [node name="Rope" type="Line2D" parent="."]
 width = 2.0
 default_color = Color(0.33102924, 0.24277017, 0.07761017, 1)
+joint_mode = 2
 script = ExtResource("4_fc0e3")
 boat_marker_path = NodePath("../Boat/BoatRopeMarker")
 harpoon_marker_path = NodePath("../Harpoon/HarpoonRopeMarker")
