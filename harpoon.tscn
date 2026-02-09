@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bnhg0r1hnnkic"]
+[gd_scene format=3 uid="uid://bnhg0r1hnnkic"]
 
 [ext_resource type="Texture2D" uid="uid://c5me4vlodbcrq" path="res://harpoon.png" id="1_mrewk"]
 [ext_resource type="Script" uid="uid://b2y3h86fla48l" path="res://harpoon.gd" id="1_yxyyu"]
@@ -53,17 +53,17 @@ turbulence_noise_strength = 0.1
 turbulence_noise_scale = 1.0
 collision_mode = 2
 
-[node name="Harpoon" type="CharacterBody2D"]
+[node name="Harpoon" type="CharacterBody2D" unique_id=2066894074]
 script = ExtResource("1_yxyyu")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=167270550]
 texture = ExtResource("1_mrewk")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=468457962]
 position = Vector2(0, 24)
 polygon = PackedVector2Array(0, 7, 7, 1, 7, -5, -7, -5, -7, 2)
 
-[node name="TrailBubblesParticles" type="GPUParticles2D" parent="."]
+[node name="TrailBubblesParticles" type="GPUParticles2D" parent="." unique_id=21785781]
 unique_name_in_owner = true
 z_index = 1
 position = Vector2(0, 21)
@@ -73,7 +73,7 @@ texture = ExtResource("3_0v313")
 fixed_fps = 0
 process_material = SubResource("ParticleProcessMaterial_yxyyu")
 
-[node name="LargeBubbles" type="GPUParticles2D" parent="."]
+[node name="LargeBubbles" type="GPUParticles2D" parent="." unique_id=707982505]
 position = Vector2(0, 356)
 amount = 50
 texture = ExtResource("4_njfb7")
@@ -81,6 +81,6 @@ lifetime = 20.0
 preprocess = 10.0
 process_material = SubResource("ParticleProcessMaterial_xvvr8")
 
-[node name="HarpoonRopeMarker" type="Marker2D" parent="."]
+[node name="RopeMarker" type="Marker2D" parent="." unique_id=1239523546]
 unique_name_in_owner = true
 position = Vector2(0, -30)

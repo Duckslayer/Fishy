@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dytj2hxxilpfn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k3s37"]
+
+[node name="RopePiece" type="RigidBody2D" unique_id=1573994885]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="." unique_id=895528496]
+position = Vector2(0, 14)
+shape = SubResource("CapsuleShape2D_k3s37")
+
+[node name="PinJoint" type="PinJoint2D" parent="CollisionShape" unique_id=380784305]
+position = Vector2(0, 14)

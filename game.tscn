@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://7tankufgnxmc"]
+[gd_scene format=3 uid="uid://7tankufgnxmc"]
 
 [ext_resource type="PackedScene" uid="uid://c7ynbor0h533n" path="res://background.tscn" id="2_7jktm"]
 [ext_resource type="PackedScene" uid="uid://kqrl86tposvs" path="res://boat.tscn" id="2_fc0e3"]
@@ -8,23 +8,24 @@
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fc0e3"]
 polygon = PackedVector2Array(0, 0, 1200, 0, 1200, -500, 0, -500)
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" unique_id=969369749]
 
-[node name="Background" parent="." instance=ExtResource("2_7jktm")]
+[node name="Background" parent="." unique_id=1251668353 instance=ExtResource("2_7jktm")]
 unique_name_in_owner = true
 position = Vector2(423, -731.3157)
 scale = Vector2(0.5, 0.5)
 
-[node name="Boat" parent="." instance=ExtResource("2_fc0e3")]
+[node name="Boat" parent="." unique_id=1781693571 instance=ExtResource("2_fc0e3")]
 position = Vector2(627, -52)
 
-[node name="Harpoon" parent="." instance=ExtResource("2_feb5d")]
+[node name="Harpoon" parent="." unique_id=291086699 instance=ExtResource("2_feb5d")]
 unique_name_in_owner = true
 position = Vector2(508, -109)
 
-[node name="Camera2D" type="Camera2D" parent="Harpoon"]
+[node name="Camera2D" type="Camera2D" parent="Harpoon" unique_id=2120665161]
 
-[node name="Rope" type="Line2D" parent="."]
+[node name="Rope" type="Line2D" parent="." unique_id=282038794]
+visible = false
 width = 2.0
 default_color = Color(0.33102924, 0.24277017, 0.07761017, 1)
 joint_mode = 2
@@ -32,7 +33,7 @@ script = ExtResource("4_fc0e3")
 boat_marker_path = NodePath("../Boat/BoatRopeMarker")
 harpoon_marker_path = NodePath("../Harpoon/HarpoonRopeMarker")
 
-[node name="BubbleOccluder" type="LightOccluder2D" parent="."]
+[node name="BubbleOccluder" type="LightOccluder2D" parent="." unique_id=694203557]
 occluder = SubResource("OccluderPolygon2D_fc0e3")
 occluder_light_mask = 4
 
