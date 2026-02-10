@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://7tankufgnxmc"]
 
-[ext_resource type="PackedScene" uid="uid://c7ynbor0h533n" path="res://background.tscn" id="2_7jktm"]
-[ext_resource type="PackedScene" uid="uid://kqrl86tposvs" path="res://boat.tscn" id="2_fc0e3"]
-[ext_resource type="PackedScene" uid="uid://bnhg0r1hnnkic" path="res://harpoon.tscn" id="2_feb5d"]
+[ext_resource type="PackedScene" uid="uid://c7ynbor0h533n" path="res://background/background.tscn" id="2_7jktm"]
+[ext_resource type="PackedScene" uid="uid://kqrl86tposvs" path="res://boat/boat.tscn" id="2_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://bnhg0r1hnnkic" path="res://harpoon/harpoon.tscn" id="2_feb5d"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fc0e3"]
 polygon = PackedVector2Array(0, 0, 1200, 0, 1200, -500, 0, -500)
@@ -21,19 +21,8 @@ position = Vector2(627, -52)
 unique_name_in_owner = true
 position = Vector2(508, -109)
 
-[node name="RopeController" parent="Harpoon/RopeMarker" parent_id_path=PackedInt32Array(291086699, 1239523546) index="0" unique_id=1910049717 node_paths=PackedStringArray("target_node")]
-length = 300.0
-segment_count = 100
-gravity = Vector2(0, -0.2)
-damp = 0.95
-constraint_iterations = 50
-target_node = NodePath("..")
-
 [node name="Camera2D" type="Camera2D" parent="Harpoon" unique_id=2120665161]
 
 [node name="BubbleOccluder" type="LightOccluder2D" parent="." unique_id=694203557]
 occluder = SubResource("OccluderPolygon2D_fc0e3")
 occluder_light_mask = 4
-
-[editable path="Boat"]
-[editable path="Harpoon"]

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://0v6ktdjfkgnt"]
+
+[ext_resource type="Script" uid="uid://byviqud6ncemk" path="res://rope/rope_controller.gd" id="1_h43l0"]
+
+[node name="RopeController" type="Node2D" unique_id=1910049717]
+script = ExtResource("1_h43l0")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=2065563129]
+unique_name_in_owner = true
+texture_repeat = 2
+width = 2.0
+default_color = Color(0.23031491, 0.23031494, 0.23031494, 1)
+texture_mode = 1
+joint_mode = 2
