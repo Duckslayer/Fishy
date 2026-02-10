@@ -11,7 +11,15 @@ var current_state = State.IDLE
 @onready var trail_particles = $TrailBubblesParticles
 @onready var start_position = global_position
 
+var rope_status = false
+
+func _ready() -> void:
+	pass
+
 func _physics_process(delta: float) -> void:
+	#if not rope_status:
+		#spawn_rope()
+		
 	match current_state:
 		State.IDLE:
 			handle_idle_input(delta)
@@ -56,6 +64,14 @@ func turn(delta):
 		rotation += turn_dir * steering_speed * delta
 	rotation = clamp(rotation, -max_turn_rad, max_turn_rad)
 	
+func spawn_rope():
+	const ROPE = preload("uid://5o1lw3jndjyf")
+	var trailing_rope = ROPE.instantiate()
+	add_child(trailing_rope)
+	
+	trailing_rope.create_rope(get_node("."))
+	rope_status = true
+
 func return_to_boat():
 	if current_state == State.DIVING:
 		current_state = State.RETRACTING

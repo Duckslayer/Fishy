@@ -37,6 +37,10 @@ Launch={
 ]
 }
 
+[physics]
+
+2d/solver/solver_iterations=30
+
 [shader_globals]
 
 wave_time={

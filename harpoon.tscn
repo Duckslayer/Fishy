@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b2y3h86fla48l" path="res://harpoon.gd" id="1_yxyyu"]
 [ext_resource type="Texture2D" uid="uid://bx7ipix1pbgbw" path="res://kenney_fish-pack_2/Vector/bubble_b.svg" id="3_0v313"]
 [ext_resource type="Texture2D" uid="uid://d0kcbpob7gvpj" path="res://kenney_fish-pack_2/Vector/bubble_c.svg" id="4_njfb7"]
+[ext_resource type="PackedScene" uid="uid://0v6ktdjfkgnt" path="res://rope_controller.tscn" id="5_axc4k"]
 
 [sub_resource type="Curve" id="Curve_0v313"]
 _data = [Vector2(0.021526419, 0.42201173), 0.0, 0.0, 0, 0, Vector2(0.2994129, 0.7015307), 0.0, 0.0, 0, 0, Vector2(0.8688845, 0.014577389), 0.0, 0.0, 0, 0]
@@ -84,3 +85,5 @@ process_material = SubResource("ParticleProcessMaterial_xvvr8")
 [node name="RopeMarker" type="Marker2D" parent="." unique_id=1239523546]
 unique_name_in_owner = true
 position = Vector2(0, -30)
+
+[node name="RopeController" parent="RopeMarker" unique_id=1910049717 instance=ExtResource("5_axc4k")]

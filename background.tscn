@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c7ynbor0h533n"]
+[gd_scene format=3 uid="uid://c7ynbor0h533n"]
 
 [ext_resource type="Script" uid="uid://bc5rwftupg01e" path="res://water_canvas.gd" id="1_i7s6n"]
 [ext_resource type="Shader" uid="uid://boyf1ekclrwts" path="res://background.gdshader" id="1_oabld"]
@@ -27,13 +27,13 @@ shader_parameter/global_depth = 0.0
 shader_parameter/wave_intensity = 0.5
 shader_parameter/wave_steepness = 1.0
 
-[node name="Background" type="Node2D"]
+[node name="Background" type="Node2D" unique_id=15770044]
 
-[node name="WaterCanvas" type="CanvasLayer" parent="."]
+[node name="WaterCanvas" type="CanvasLayer" parent="." unique_id=213249050]
 layer = -1
 script = ExtResource("1_i7s6n")
 
-[node name="Sky" type="TextureRect" parent="WaterCanvas"]
+[node name="Sky" type="TextureRect" parent="WaterCanvas" unique_id=897439626]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -42,7 +42,7 @@ grow_vertical = 2
 texture = SubResource("GradientTexture2D_xehqc")
 expand_mode = 1
 
-[node name="Ocean" type="ColorRect" parent="WaterCanvas"]
+[node name="Ocean" type="ColorRect" parent="WaterCanvas" unique_id=296047775]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_i7s6n")
 anchors_preset = 15

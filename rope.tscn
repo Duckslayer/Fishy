@@ -4,4 +4,3 @@
 
 [node name="Rope" type="Node2D" unique_id=970110742]
 script = ExtResource("1_0756u")
-length = null
