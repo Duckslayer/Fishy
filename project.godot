@@ -19,6 +19,14 @@ run/main_scene="uid://7tankufgnxmc"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GDAIMCPRuntime="*uid://dcne7ryelpxmn"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdai-mcp-plugin-godot/plugin.cfg")
+
 [input]
 
 Left={
