@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c7ynbor0h533n" path="res://background/background.tscn" id="2_7jktm"]
 [ext_resource type="PackedScene" uid="uid://kqrl86tposvs" path="res://boat/boat.tscn" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://bnhg0r1hnnkic" path="res://harpoon/harpoon.tscn" id="2_feb5d"]
-[ext_resource type="PackedScene" uid="uid://bunm3ffkiabq2" path="res://fish/fish.tscn" id="5_7jktm"]
+[ext_resource type="PackedScene" uid="uid://bunm3ffkiabq2" path="res://fish/basic_fish.tscn" id="5_7jktm"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fc0e3"]
 polygon = PackedVector2Array(0, 0, 1200, 0, 1200, -500, 0, -500)

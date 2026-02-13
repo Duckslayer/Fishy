@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://5o1lw3jndjyf"]
-
-[ext_resource type="Script" uid="uid://dl0y7u77gui2v" path="res://rope2.gd" id="1_0756u"]
-
-[node name="Rope" type="Node2D" unique_id=970110742]
-script = ExtResource("1_0756u")
