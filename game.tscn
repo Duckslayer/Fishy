@@ -5,6 +5,34 @@
 [ext_resource type="PackedScene" uid="uid://kqrl86tposvs" path="res://boat/boat.tscn" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://bnhg0r1hnnkic" path="res://harpoon/harpoon.tscn" id="2_feb5d"]
 [ext_resource type="PackedScene" uid="uid://bunm3ffkiabq2" path="res://fish/basic_fish.tscn" id="5_7jktm"]
+[ext_resource type="Texture2D" uid="uid://d0kcbpob7gvpj" path="res://kenney_fish-pack_2/Vector/bubble_c.svg" id="5_ryrav"]
+
+[sub_resource type="Curve" id="Curve_eow3j"]
+_limits = [-2.0, 2.0, 0.0, 1.0]
+_data = [Vector2(0, -0.72941184), 0.0, 0.0, 0, 0, Vector2(0.15876779, 0.8705883), 0.0, 0.0, 0, 0, Vector2(0.41232228, -0.7058823), 0.0, 0.0, 0, 0, Vector2(0.6374408, 0.49411774), 0.0, 0.0, 0, 0, Vector2(0.84123224, -0.30588222), 0.0, 0.0, 0, 0, Vector2(0.936019, 0.75294125), 0.0, 0.0, 0, 0, Vector2(1, -0.2588234), 0.0, 0.0, 0, 0]
+point_count = 7
+
+[sub_resource type="CurveTexture" id="CurveTexture_xehqc"]
+curve = SubResource("Curve_eow3j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j5wjh"]
+lifetime_randomness = 0.3
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(600, 1, 1)
+initial_velocity_max = 10.0
+orbit_velocity_min = -0.019999906
+orbit_velocity_max = 0.020000096
+orbit_velocity_curve = SubResource("CurveTexture_xehqc")
+gravity = Vector3(0, -30, 0)
+scale_min = 0.099999994
+scale_max = 0.5
+color = Color(1, 1, 1, 0.45882353)
+hue_variation_min = -0.19000001
+hue_variation_max = -2.2351742e-08
+turbulence_noise_strength = 0.1
+turbulence_noise_scale = 1.0
+collision_mode = 2
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fc0e3"]
 polygon = PackedVector2Array(0, 0, 1200, 0, 1200, -500, 0, -500)
@@ -25,6 +53,16 @@ unique_name_in_owner = true
 position = Vector2(508, -109)
 
 [node name="Camera2D" type="Camera2D" parent="Harpoon" unique_id=2120665161]
+
+[node name="LargeBubbles" type="GPUParticles2D" parent="Harpoon" unique_id=1826749509]
+position = Vector2(0, 437)
+scale = Vector2(1.3199975, 1)
+amount = 100
+texture = ExtResource("5_ryrav")
+lifetime = 20.0
+preprocess = 10.0
+visibility_rect = Rect2(-600, -1200, 1200, 1200)
+process_material = SubResource("ParticleProcessMaterial_j5wjh")
 
 [node name="BubbleOccluder" type="LightOccluder2D" parent="." unique_id=694203557]
 occluder = SubResource("OccluderPolygon2D_fc0e3")

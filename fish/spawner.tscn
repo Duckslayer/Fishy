@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://d11dcwjg8lq4e"]
+
+[ext_resource type="Script" uid="uid://cmbky8db6pg6h" path="res://fish/spawner.gd" id="1_qjqog"]
+[ext_resource type="PackedScene" uid="uid://bunm3ffkiabq2" path="res://fish/basic_fish.tscn" id="2_b051e"]
+
+[node name="Spawner" type="Node2D" unique_id=1322794572]
+script = ExtResource("1_qjqog")
+fish_scenes = Array[PackedScene]([ExtResource("2_b051e")])
+
+[node name="Timer" type="Timer" parent="." unique_id=595675865]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
