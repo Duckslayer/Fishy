@@ -27,6 +27,7 @@ color = Color(1, 1, 1, 0.43529412)
 collision_mode = 2
 
 [node name="Harpoon" type="CharacterBody2D" unique_id=2066894074]
+collision_layer = 2
 script = ExtResource("1_yxyyu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=167270550]

@@ -58,6 +58,7 @@ _data = {
 }
 
 [node name="BasicFish" type="Area2D" unique_id=1449353936]
+collision_mask = 2
 script = ExtResource("1_sgogb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1110782290]
@@ -65,8 +66,10 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_pxh1u")
 
 [node name="Appearance" type="Node2D" parent="." unique_id=1612962280]
+unique_name_in_owner = true
 
 [node name="Tail" type="Sprite2D" parent="Appearance" unique_id=1592144195]
+unique_name_in_owner = true
 position = Vector2(-10.999999, 0)
 texture = ExtResource("1_jx7ej")
 offset = Vector2(-10, 0)
@@ -74,12 +77,22 @@ region_enabled = true
 region_rect = Rect2(0, 0, 20, 64)
 
 [node name="Body" type="Sprite2D" parent="Appearance" unique_id=798317034]
+unique_name_in_owner = true
 position = Vector2(10, 0)
 texture = ExtResource("1_jx7ej")
 region_enabled = true
 region_rect = Rect2(20, 0, 44, 64)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2055299123]
+unique_name_in_owner = true
 root_node = NodePath("../Appearance")
 libraries/ = SubResource("AnimationLibrary_12uvg")
 autoplay = &"swim"
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=364608433]
+wait_time = 30.0
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

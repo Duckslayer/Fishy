@@ -45,6 +45,11 @@ Launch={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Fish"
+2d_physics/layer_2="Harpoon"
+
 [physics]
 
 2d/solver/solver_iterations=30
