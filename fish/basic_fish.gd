@@ -23,8 +23,6 @@ func die():
 	# Create a "Death" tween
 	var tween = create_tween().set_parallel(true)
 	
-	# Try targeting the Sprite directly for the fade
-	# and use the full Vector2 for scale
 	tween.tween_property($Appearance, "modulate", Color(1, 1, 1, 0), 0.3)
 	tween.tween_property($Appearance, "scale", Vector2.ZERO, 0.3)
 	
