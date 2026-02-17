@@ -1,5 +1,8 @@
 extends Node2D
 
 
-var power = 10
-var points = 0
+var score = 0
+
+func _on_basic_fish_fish_kill(value: int) -> void:
+	score += value
+	%HUD.update_score(score)

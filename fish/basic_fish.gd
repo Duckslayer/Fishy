@@ -1,5 +1,7 @@
 extends BaseFish
 
+var points = 10
+
 func _process(delta: float) -> void:
 	var direction = Vector2.from_angle(global_rotation)
 	var velocity = direction * speed
@@ -29,4 +31,5 @@ func die():
 	tween.finished.connect(func(): 
 		queue_free()
 	)
+	fish_kill.emit(points)
 	
