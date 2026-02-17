@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bnhg0r1hnnkic" path="res://harpoon/harpoon.tscn" id="2_feb5d"]
 [ext_resource type="PackedScene" uid="uid://bunm3ffkiabq2" path="res://fish/basic_fish.tscn" id="5_7jktm"]
 [ext_resource type="Texture2D" uid="uid://d0kcbpob7gvpj" path="res://kenney_fish-pack_2/Vector/bubble_c.svg" id="5_ryrav"]
+[ext_resource type="PackedScene" uid="uid://d11dcwjg8lq4e" path="res://fish/spawner.tscn" id="6_eow3j"]
 
 [sub_resource type="Curve" id="Curve_eow3j"]
 _limits = [-2.0, 2.0, 0.0, 1.0]
@@ -63,6 +64,8 @@ lifetime = 20.0
 preprocess = 10.0
 visibility_rect = Rect2(-600, -1200, 1200, 1200)
 process_material = SubResource("ParticleProcessMaterial_j5wjh")
+
+[node name="Spawner" parent="Harpoon" unique_id=1322794572 instance=ExtResource("6_eow3j")]
 
 [node name="BubbleOccluder" type="LightOccluder2D" parent="." unique_id=694203557]
 occluder = SubResource("OccluderPolygon2D_fc0e3")
