@@ -9,7 +9,12 @@ extends Node2D
 
 # NODES
 @export var target_node: Node2D # The node the rope hangs from (e.g. Player)
+@export var boat_anchor: Marker2D # The boat marker to draw taut rope towards
 @onready var line_2d = $Line2D
+
+# STATE
+enum RopeState { HIDDEN, SIMULATING, TAUT }
+var rope_state: RopeState = RopeState.HIDDEN
 
 # DATA
 var pos: PackedVector2Array = []
@@ -24,12 +29,41 @@ func _ready():
 	for i in range(segment_count):
 		pos.append(start_pos + Vector2(0, -i * segment_length))
 		prev_pos.append(start_pos + Vector2(0, -i * segment_length))
+	
+	# Start hidden
+	set_rope_state(RopeState.HIDDEN)
+
+func set_rope_state(new_state: RopeState) -> void:
+	rope_state = new_state
+	match rope_state:
+		RopeState.HIDDEN:
+			line_2d.visible = false
+			_reset_points_to_anchor()
+		RopeState.SIMULATING:
+			line_2d.visible = true
+			_reset_points_to_anchor()
+		RopeState.TAUT:
+			line_2d.visible = true
+
+func _reset_points_to_anchor() -> void:
+	var anchor = global_position
+	if target_node:
+		anchor = target_node.global_position
+	for i in range(segment_count):
+		pos[i] = anchor
+		prev_pos[i] = anchor
 
 func _physics_process(delta: float) -> void:
-	update_points(delta)
-	apply_constraints()
-	update_visuals()
-	
+	match rope_state:
+		RopeState.HIDDEN:
+			return
+		RopeState.SIMULATING:
+			update_points(delta)
+			apply_constraints()
+			update_visuals()
+		RopeState.TAUT:
+			update_taut()
+
 func update_points(delta: float) -> void:
 	for i in range(segment_count):
 		# Velocity is implied by (current_pos - prev_pos)
@@ -72,8 +106,23 @@ func apply_constraints():
 				if i != 0:
 					pos[i] += correction
 				pos[i+1] -= correction
+
+# 3. TAUT MODE — straight line from harpoon to boat
+func update_taut() -> void:
+	if not target_node or not boat_anchor:
+		return
+	
+	var start = target_node.global_position
+	var end = boat_anchor.global_position
+	
+	for i in range(segment_count):
+		var t = float(i) / float(segment_count - 1)
+		pos[i] = start.lerp(end, t)
+		prev_pos[i] = pos[i]
+	
+	update_visuals()
 				
-# 3. DRAW
+# 4. DRAW
 func update_visuals():
 	# Line2D works in local space, but our math is global.
 	# We convert points to local space for drawing.

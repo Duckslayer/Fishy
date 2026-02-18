@@ -9,6 +9,7 @@ enum State { IDLE, DIVING, RETRACTING }
 var current_state = State.IDLE
 
 @onready var trail_particles = $TrailBubblesParticles
+@onready var rope_controller = $RopeMarker/RopeController
 @onready var start_position = global_position
 
 func _ready() -> void:
@@ -31,6 +32,7 @@ func handle_idle_input(delta):
 		current_state = State.DIVING
 		trail_particles.emitting = true
 		start_position = global_position
+		rope_controller.set_rope_state(rope_controller.RopeState.SIMULATING)
 
 func handle_diving(delta):
 	turn(delta)
@@ -39,7 +41,7 @@ func handle_diving(delta):
 	
 	move_and_slide()
 	
-	if global_position.y > 20000:
+	if global_position.y > 2000:
 		return_to_boat()
 
 func handle_retracting(delta):
@@ -51,6 +53,7 @@ func handle_retracting(delta):
 		trail_particles.emitting = false
 		rotation = 0 # Ensure perfectly straight
 		global_position = start_position
+		rope_controller.set_rope_state(rope_controller.RopeState.HIDDEN)
 		
 func turn(delta):
 	var turn_dir = Input.get_axis("Right", "Left")
@@ -63,4 +66,5 @@ func turn(delta):
 func return_to_boat():
 	if current_state == State.DIVING:
 		current_state = State.RETRACTING
+		rope_controller.set_rope_state(rope_controller.RopeState.TAUT)
 		# You can add "Juice" here later: sound effects, camera shake, etc.
