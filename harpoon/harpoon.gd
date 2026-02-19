@@ -25,6 +25,27 @@ func _ready() -> void:
 	trail_particles.amount = 60
 	trail_particles.amount_ratio = base_ratio
 	GameEvents.intensity_changed.connect(_on_intensity_changed)
+	GameEvents.fish_impaled.connect(_on_fish_impaled)
+
+var impaled_fish: Array[Node2D] = []
+
+func _on_fish_impaled(appearance: Node2D) -> void:
+	# Adopt the fish's visual as a child of the harpoon
+	add_child(appearance)
+	# Random offset near the harpoon tip so multiple fish don't perfectly overlap
+	appearance.position = Vector2(randf_range(-8, 8), randf_range(-5, 15))
+	appearance.rotation = randf_range(-0.3, 0.3)
+	impaled_fish.append(appearance)
+	
+	# Fade out and shrink over time
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(appearance, "modulate", Color(1, 1, 1, 0), 0.6).set_delay(0.15)
+	tween.tween_property(appearance, "scale", appearance.scale * 0.3, 0.6).set_delay(0.15)
+	tween.finished.connect(func():
+		if is_instance_valid(appearance):
+			appearance.queue_free()
+			impaled_fish.erase(appearance)
+	)
 
 func _on_intensity_changed(value: float) -> void:
 	# amount_ratio (0.0–1.0) controls density without restarting the particle system
@@ -72,6 +93,11 @@ func handle_retracting(delta):
 		rotation = 0 # Ensure perfectly straight
 		global_position = start_position
 		rope_controller.set_rope_state(rope_controller.RopeState.HIDDEN)
+		# Clean up any remaining impaled fish
+		for fish_vis in impaled_fish:
+			if is_instance_valid(fish_vis):
+				fish_vis.queue_free()
+		impaled_fish.clear()
 		
 func turn(delta):
 	var turn_dir = Input.get_axis("Right", "Left")

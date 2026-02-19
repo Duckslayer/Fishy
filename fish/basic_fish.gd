@@ -30,14 +30,11 @@ func die():
 	# Stop the swim animation
 	$AnimationPlayer.stop()
 	
-	# Create a "Death" tween
-	var tween = create_tween().set_parallel(true)
+	# Detach Appearance and send it to the harpoon for impaling
+	var appearance = $Appearance
+	remove_child(appearance)
+	GameEvents.fish_impaled.emit(appearance)
 	
-	tween.tween_property($Appearance, "modulate", Color(1, 1, 1, 0), 0.3)
-	tween.tween_property($Appearance, "scale", Vector2.ZERO, 0.3)
-	
-	tween.finished.connect(func(): 
-		queue_free()
-	)
 	GameEvents.fish_kill.emit(points)
+	queue_free()
 	
