@@ -13,19 +13,22 @@ var current_state = State.IDLE
 @onready var rope_controller = $RopeMarker/RopeController
 @onready var start_position = global_position
 
-# Baseline bubble trail values (from the scene defaults)
-var base_amount: int = 15
-var max_amount: int = 60
+# Baseline bubble trail values
+var base_ratio: float = 0.25  # 15/60 — baseline fraction of max particles
 var base_scale_max: float = 0.2
 var max_scale_max: float = 0.5
 var base_velocity_max: float = 41.0
 var max_velocity_max: float = 120.0
 
 func _ready() -> void:
+	# Pre-allocate max particles so we never reallocate mid-emit
+	trail_particles.amount = 60
+	trail_particles.amount_ratio = base_ratio
 	GameEvents.intensity_changed.connect(_on_intensity_changed)
 
 func _on_intensity_changed(value: float) -> void:
-	trail_particles.amount = int(lerp(float(base_amount), float(max_amount), value))
+	# amount_ratio (0.0–1.0) controls density without restarting the particle system
+	trail_particles.amount_ratio = lerp(base_ratio, 1.0, value)
 	trail_material.scale_max = lerp(base_scale_max, max_scale_max, value)
 	trail_material.initial_velocity_max = lerp(base_velocity_max, max_velocity_max, value)
 
