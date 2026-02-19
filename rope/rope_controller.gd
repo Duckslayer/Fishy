@@ -6,6 +6,7 @@ extends Node2D
 @export var gravity: Vector2 = Vector2(0, -980)
 @export var damp: float = 0.95 # Air resistance (0.9 - 0.99)
 @export var constraint_iterations: int = 50 # Higher = stiffer rope
+@export var mu : float = 0.01 # "Min spacing"
 
 # NODES
 @export var target_node: Node2D # The node the rope hangs from (e.g. Player)
@@ -27,8 +28,8 @@ func _ready():
 	var start_pos = global_position
 	
 	for i in range(segment_count):
-		pos.append(start_pos + Vector2(0, -i * segment_length))
-		prev_pos.append(start_pos + Vector2(0, -i * segment_length))
+		pos.append(start_pos)
+		prev_pos.append(start_pos)
 	
 	# Start hidden
 	set_rope_state(RopeState.HIDDEN)
@@ -42,6 +43,7 @@ func set_rope_state(new_state: RopeState) -> void:
 		RopeState.SIMULATING:
 			line_2d.visible = true
 			_reset_points_to_anchor()
+			_spool_out()
 		RopeState.TAUT:
 			line_2d.visible = true
 
@@ -52,6 +54,12 @@ func _reset_points_to_anchor() -> void:
 	for i in range(segment_count):
 		pos[i] = anchor
 		prev_pos[i] = anchor
+		
+func _spool_out() -> void:
+	var start_pos = global_position
+	for i in range(segment_count):
+		pos[i] = (start_pos + Vector2(-2*mu + randf()*mu, -i * mu)) # Make some "wiggle" so the rope doesn't get stuck in weird math space
+		prev_pos[i] = pos[i]
 
 func _physics_process(delta: float) -> void:
 	match rope_state:
