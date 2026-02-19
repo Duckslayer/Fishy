@@ -8,12 +8,26 @@ extends CharacterBody2D
 enum State { IDLE, DIVING, RETRACTING }
 var current_state = State.IDLE
 
-@onready var trail_particles = $TrailBubblesParticles
+@onready var trail_particles: GPUParticles2D = $TrailBubblesParticles
+@onready var trail_material: ParticleProcessMaterial = trail_particles.process_material
 @onready var rope_controller = $RopeMarker/RopeController
 @onready var start_position = global_position
 
+# Baseline bubble trail values (from the scene defaults)
+var base_amount: int = 15
+var max_amount: int = 60
+var base_scale_max: float = 0.2
+var max_scale_max: float = 0.5
+var base_velocity_max: float = 41.0
+var max_velocity_max: float = 120.0
+
 func _ready() -> void:
-	pass
+	GameEvents.intensity_changed.connect(_on_intensity_changed)
+
+func _on_intensity_changed(value: float) -> void:
+	trail_particles.amount = int(lerp(float(base_amount), float(max_amount), value))
+	trail_material.scale_max = lerp(base_scale_max, max_scale_max, value)
+	trail_material.initial_velocity_max = lerp(base_velocity_max, max_velocity_max, value)
 
 func _physics_process(delta: float) -> void:
 	match current_state:
@@ -33,6 +47,7 @@ func handle_idle_input(delta):
 		trail_particles.emitting = true
 		start_position = global_position
 		rope_controller.set_rope_state(rope_controller.RopeState.SIMULATING)
+		GameEvents.reset_combo()
 
 func handle_diving(delta):
 	turn(delta)
@@ -41,7 +56,7 @@ func handle_diving(delta):
 	
 	move_and_slide()
 	
-	if global_position.y > 2000:
+	if global_position.y > 10000:
 		return_to_boat()
 
 func handle_retracting(delta):
@@ -66,5 +81,6 @@ func turn(delta):
 func return_to_boat():
 	if current_state == State.DIVING:
 		current_state = State.RETRACTING
+		velocity = Vector2(0,0)
 		rope_controller.set_rope_state(rope_controller.RopeState.TAUT)
 		# You can add "Juice" here later: sound effects, camera shake, etc.

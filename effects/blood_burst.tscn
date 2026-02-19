@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://4hokyni3ibou"]
+
+[ext_resource type="Texture2D" uid="uid://bx7ipix1pbgbw" path="res://kenney_fish-pack_2/Vector/bubble_b.svg" id="1_edkwf"]
+[ext_resource type="Script" uid="uid://dfcuhoybinmkf" path="res://effects/blood_burst.gd" id="1_ymwol"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ymwol"]
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 200, 0)
+damping_min = 20.0
+damping_max = 40.0
+scale_min = 0.03
+scale_max = 0.1
+color = Color(0.7, 0.05, 0.05, 0.9)
+
+[node name="BloodBurst" type="GPUParticles2D" unique_id=1072995390]
+emitting = false
+amount = 12
+texture = ExtResource("1_edkwf")
+lifetime = 0.4
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_ymwol")
+script = ExtResource("1_ymwol")
