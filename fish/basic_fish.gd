@@ -3,6 +3,9 @@ extends BaseFish
 var points = 10
 var blood_burst_scene = preload("res://effects/blood_burst.tscn")
 
+func _ready() -> void:
+	$Appearance.scale *= size_scale
+
 func _process(delta: float) -> void:
 	var direction = Vector2.from_angle(global_rotation)
 	var velocity = direction * speed
