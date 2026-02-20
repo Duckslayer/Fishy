@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://crgt6j7dquswo"]
+
+[ext_resource type="Script" uid="uid://d2q00div4svnu" path="res://fish/dangling_fish.gd" id="1_k02ag"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k02ag"]
+radius = 17.0
+height = 56.0
+
+[node name="DanglingFish" type="RigidBody2D" unique_id=1641087298]
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 2.0
+angular_damp = 2.0
+script = ExtResource("1_k02ag")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=335659959]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_k02ag")

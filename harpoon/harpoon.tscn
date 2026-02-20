@@ -34,6 +34,7 @@ script = ExtResource("1_yxyyu")
 texture = ExtResource("1_mrewk")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=468457962]
+unique_name_in_owner = true
 position = Vector2(0, 24)
 polygon = PackedVector2Array(0, 7, 7, 1, 7, -5, -7, -5, -7, 2)
 
