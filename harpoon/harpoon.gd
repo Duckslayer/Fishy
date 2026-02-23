@@ -16,6 +16,7 @@ var dangling_fish_scene = preload("res://fish/dangling_fish.tscn")
 @onready var rope_controller = $RopeMarker/RopeController
 @onready var start_position = global_position
 @onready var large_bubbles: GPUParticles2D = $LargeBubbles
+@onready var harpoon_glow: PointLight2D = $HarpoonGlow
 const LARGE_BUBBLES_OFFSET_Y: float = 437.0
 
 # Baseline bubble trail values
@@ -28,6 +29,10 @@ var max_velocity_max: float = 120.0
 # Track the tween appearances (temporary) and the dangling bodies (persistent)
 var impaled_fish: Array[Node2D] = []
 var dangling_fish: Array[Node] = []  # RigidBody2D instances + PinJoint2D instances
+var glow_tween: Tween = null
+
+# Energy targets per tier: CALM=0, HEATED=1.5, RAMPAGE=2.5, FRENZY=4.0
+const TIER_GLOW_ENERGY: Array[float] = [0.0, 1.5, 2.5, 4.0]
 
 func _ready() -> void:
 	# Pre-allocate max particles so we never reallocate mid-emit
@@ -35,6 +40,7 @@ func _ready() -> void:
 	trail_particles.amount_ratio = base_ratio
 	GameEvents.intensity_changed.connect(_on_intensity_changed)
 	GameEvents.fish_impaled.connect(_on_fish_impaled)
+	GameEvents.tier_changed.connect(_on_tier_changed)
 
 func _on_fish_impaled(appearance: Node2D) -> void:
 	# Adopt the fish's visual as a child of the harpoon
@@ -83,6 +89,13 @@ func _spawn_dangling_fish(appearance: Node2D) -> void:
 	
 	dangling_fish.append(fish_body)
 	dangling_fish.append(pin)
+
+func _on_tier_changed(new_tier: int, _old_tier: int) -> void:
+	var target_energy: float = TIER_GLOW_ENERGY[new_tier]
+	if glow_tween and glow_tween.is_valid():
+		glow_tween.kill()
+	glow_tween = create_tween()
+	glow_tween.tween_property(harpoon_glow, "energy", target_energy, 0.3).set_ease(Tween.EASE_OUT)
 
 func _on_intensity_changed(value: float) -> void:
 	# amount_ratio (0.0–1.0) controls density without restarting the particle system

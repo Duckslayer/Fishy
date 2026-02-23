@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b2y3h86fla48l" path="res://harpoon/harpoon.gd" id="1_yxyyu"]
 [ext_resource type="Texture2D" uid="uid://bx7ipix1pbgbw" path="res://kenney_fish-pack_2/Vector/bubble_b.svg" id="3_0v313"]
 [ext_resource type="PackedScene" uid="uid://0v6ktdjfkgnt" path="res://rope/rope_controller.tscn" id="5_axc4k"]
+[ext_resource type="Texture2D" uid="uid://cptgxq2lplwe4" path="res://effects/glow_texture.tres" id="5_cvga1"]
 
 [sub_resource type="Curve" id="Curve_0v313"]
 _data = [Vector2(0.021526419, 0.42201173), 0.0, 0.0, 0, 0, Vector2(0.2994129, 0.7015307), 0.0, 0.0, 0, 0, Vector2(0.8688845, 0.014577389), 0.0, 0.0, 0, 0]
@@ -55,3 +56,10 @@ position = Vector2(0, -30)
 [node name="RopeController" parent="RopeMarker" unique_id=1910049717 instance=ExtResource("5_axc4k")]
 length = 600.0
 gravity = Vector2(0, -90)
+
+[node name="HarpoonGlow" type="PointLight2D" parent="." unique_id=2056863213]
+position = Vector2(0, 24)
+color = Color(1, 0.85, 0.5, 1)
+energy = 0.0
+texture = ExtResource("5_cvga1")
+texture_scale = 2.0
