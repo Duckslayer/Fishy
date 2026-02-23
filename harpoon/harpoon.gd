@@ -50,11 +50,9 @@ func _on_fish_impaled(appearance: Node2D) -> void:
 	# Slide to rope marker and fade out (existing tween)
 	var tween = create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(appearance, "position", %RopeMarker.position + (direction * fish_length * 0.5), 0.2)
+	tween.tween_property(appearance, "position", %RopeMarker.position + (direction * fish_length * 0.4), 0.2)
 	tween.tween_property(appearance, "rotation", PI / 2, 0.2)
-	tween.set_parallel(false)
 	
-	tween.tween_property(appearance, "modulate", Color(1, 1, 1, 0), 0.6)
 	tween.finished.connect(func():
 		if is_instance_valid(appearance):
 			# Spawn the dangling physics fish before freeing the tween appearance
@@ -67,9 +65,12 @@ func _spawn_dangling_fish(appearance: Node2D) -> void:
 	var fish_body: RigidBody2D = dangling_fish_scene.instantiate()
 	fish_body.setup(appearance)
 	
+	var fish_length = appearance.get_node("Body").texture.get_width() * appearance.scale.x
+	var direction = (appearance.position - %RopeMarker.position).normalized()
+	
 	# Add as child of the harpoon so it moves with us
 	add_child(fish_body)
-	fish_body.position = %RopeMarker.position
+	fish_body.position = %RopeMarker.position + (direction * fish_length * 0.4)
 	fish_body.rotation = appearance.rotation
 	
 	# Create a PinJoint2D to attach at the rope marker
