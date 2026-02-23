@@ -17,6 +17,7 @@ var dangling_fish_scene = preload("res://fish/dangling_fish.tscn")
 @onready var start_position = global_position
 @onready var large_bubbles: GPUParticles2D = $LargeBubbles
 @onready var harpoon_glow: PointLight2D = $CollisionPolygon2D/HarpoonGlow
+@onready var harpoon_sprite_mat: ShaderMaterial = $Sprite2D.material
 const LARGE_BUBBLES_OFFSET_Y: float = 437.0
 
 # Baseline bubble trail values
@@ -30,9 +31,12 @@ var max_velocity_max: float = 120.0
 var impaled_fish: Array[Node2D] = []
 var dangling_fish: Array[Node] = []  # RigidBody2D instances + PinJoint2D instances
 var glow_tween: Tween = null
+var current_sprite_glow: float = 0.0
 
 # Energy targets per tier: CALM=0, HEATED=1.5, RAMPAGE=2.5, FRENZY=4.0
 const TIER_GLOW_ENERGY: Array[float] = [0.0, 1.5, 2.5, 4.0]
+# Shader glow_intensity per tier: CALM=0, HEATED=0.4, RAMPAGE=0.7, FRENZY=1.0
+const TIER_SPRITE_GLOW: Array[float] = [0.0, 0.4, 0.7, 1.0]
 
 func _ready() -> void:
 	# Pre-allocate max particles so we never reallocate mid-emit
@@ -92,10 +96,16 @@ func _spawn_dangling_fish(appearance: Node2D) -> void:
 
 func _on_tier_changed(new_tier: int, _old_tier: int) -> void:
 	var target_energy: float = TIER_GLOW_ENERGY[new_tier]
+	var target_sprite_glow: float = TIER_SPRITE_GLOW[new_tier]
 	if glow_tween and glow_tween.is_valid():
 		glow_tween.kill()
-	glow_tween = create_tween()
+	glow_tween = create_tween().set_parallel(true)
 	glow_tween.tween_property(harpoon_glow, "energy", target_energy, 0.3).set_ease(Tween.EASE_OUT)
+	glow_tween.tween_method(_set_sprite_glow, current_sprite_glow, target_sprite_glow, 0.3).set_ease(Tween.EASE_OUT)
+
+func _set_sprite_glow(value: float) -> void:
+	current_sprite_glow = value
+	harpoon_sprite_mat.set_shader_parameter("glow_intensity", value)
 
 func _on_intensity_changed(value: float) -> void:
 	# amount_ratio (0.0–1.0) controls density without restarting the particle system

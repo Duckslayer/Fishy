@@ -2,9 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://c5me4vlodbcrq" path="res://harpoon/harpoon.png" id="1_mrewk"]
 [ext_resource type="Script" uid="uid://b2y3h86fla48l" path="res://harpoon/harpoon.gd" id="1_yxyyu"]
+[ext_resource type="Shader" uid="uid://c4q7bhpn08x4f" path="res://harpoon/harpoon_glow.gdshader" id="2_x8ecc"]
 [ext_resource type="Texture2D" uid="uid://bx7ipix1pbgbw" path="res://kenney_fish-pack_2/Vector/bubble_b.svg" id="3_0v313"]
 [ext_resource type="PackedScene" uid="uid://0v6ktdjfkgnt" path="res://rope/rope_controller.tscn" id="5_axc4k"]
 [ext_resource type="Texture2D" uid="uid://cptgxq2lplwe4" path="res://effects/glow_texture.tres" id="5_cvga1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cvga1"]
+shader = ExtResource("2_x8ecc")
+shader_parameter/glow_intensity = 0.0
+shader_parameter/glow_color = Color(1, 0.7, 0.3, 1)
+shader_parameter/glow_tip_bias = 2.5
 
 [sub_resource type="Curve" id="Curve_0v313"]
 _data = [Vector2(0.021526419, 0.42201173), 0.0, 0.0, 0, 0, Vector2(0.2994129, 0.7015307), 0.0, 0.0, 0, 0, Vector2(0.8688845, 0.014577389), 0.0, 0.0, 0, 0]
@@ -32,6 +39,7 @@ collision_layer = 2
 script = ExtResource("1_yxyyu")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=167270550]
+material = SubResource("ShaderMaterial_cvga1")
 texture = ExtResource("1_mrewk")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=468457962]
