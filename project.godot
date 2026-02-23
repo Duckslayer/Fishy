@@ -8,6 +8,13 @@
 
 config_version=5
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
 [animation]
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true

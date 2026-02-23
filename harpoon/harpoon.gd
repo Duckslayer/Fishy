@@ -15,6 +15,8 @@ var dangling_fish_scene = preload("res://fish/dangling_fish.tscn")
 @onready var trail_material: ParticleProcessMaterial = trail_particles.process_material
 @onready var rope_controller = $RopeMarker/RopeController
 @onready var start_position = global_position
+@onready var large_bubbles: GPUParticles2D = $LargeBubbles
+const LARGE_BUBBLES_OFFSET_Y: float = 437.0
 
 # Baseline bubble trail values
 var base_ratio: float = 0.25  # 15/60 — baseline fraction of max particles
@@ -95,6 +97,11 @@ func _physics_process(delta: float) -> void:
 			handle_diving(delta)
 		State.RETRACTING:
 			handle_retracting(delta)
+	
+	# Keep LargeBubbles upright and directly below the harpoon,
+	# regardless of harpoon rotation
+	large_bubbles.global_rotation = 0.0
+	large_bubbles.global_position = global_position + Vector2(0, LARGE_BUBBLES_OFFSET_Y)
 			
 func handle_idle_input(delta):
 	turn(delta)
