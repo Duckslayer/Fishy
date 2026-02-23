@@ -16,8 +16,8 @@ var dangling_fish_scene = preload("res://fish/dangling_fish.tscn")
 @onready var rope_controller = $RopeMarker/RopeController
 @onready var start_position = global_position
 @onready var large_bubbles: GPUParticles2D = $LargeBubbles
-@onready var harpoon_glow: PointLight2D = $CollisionPolygon2D/HarpoonGlow
-@onready var harpoon_sprite_mat: ShaderMaterial = $Sprite2D.material
+@onready var harpoon_glow: PointLight2D = $HeadSprite/HarpoonGlow
+@onready var harpoon_sprite_mat: ShaderMaterial = $HeadSprite.material
 const LARGE_BUBBLES_OFFSET_Y: float = 437.0
 
 # Baseline bubble trail values

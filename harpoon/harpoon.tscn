@@ -38,21 +38,33 @@ collision_mode = 2
 collision_layer = 2
 script = ExtResource("1_yxyyu")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=167270550]
-material = SubResource("ShaderMaterial_cvga1")
+[node name="ShaftSprite" type="Sprite2D" parent="." unique_id=1163446627]
+unique_name_in_owner = true
+position = Vector2(0, -6.5)
 texture = ExtResource("1_mrewk")
+region_enabled = true
+region_rect = Rect2(0, 0, 15, 51)
+
+[node name="HeadSprite" type="Sprite2D" parent="." unique_id=141835807]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_cvga1")
+position = Vector2(0, 25.5)
+texture = ExtResource("1_mrewk")
+region_enabled = true
+region_rect = Rect2(0, 51, 15, 12)
+
+[node name="HarpoonGlow" type="PointLight2D" parent="HeadSprite" unique_id=2056863213]
+unique_name_in_owner = true
+position = Vector2(0, -1.5)
+color = Color(1, 0.85, 0.5, 1)
+energy = 0.0
+texture = ExtResource("5_cvga1")
+texture_scale = 2.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=468457962]
 unique_name_in_owner = true
 position = Vector2(0, 24)
 polygon = PackedVector2Array(0, 7, 7, 1, 7, -5, -7, -5, -7, 2)
-
-[node name="HarpoonGlow" type="PointLight2D" parent="CollisionPolygon2D" unique_id=2056863213]
-unique_name_in_owner = true
-color = Color(1, 0.85, 0.5, 1)
-energy = 0.0
-texture = ExtResource("5_cvga1")
-texture_scale = 2.0
 
 [node name="TrailBubblesParticles" type="GPUParticles2D" parent="." unique_id=21785781]
 unique_name_in_owner = true
