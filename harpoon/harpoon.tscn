@@ -39,6 +39,13 @@ unique_name_in_owner = true
 position = Vector2(0, 24)
 polygon = PackedVector2Array(0, 7, 7, 1, 7, -5, -7, -5, -7, 2)
 
+[node name="HarpoonGlow" type="PointLight2D" parent="CollisionPolygon2D" unique_id=2056863213]
+unique_name_in_owner = true
+color = Color(1, 0.85, 0.5, 1)
+energy = 0.0
+texture = ExtResource("5_cvga1")
+texture_scale = 2.0
+
 [node name="TrailBubblesParticles" type="GPUParticles2D" parent="." unique_id=21785781]
 unique_name_in_owner = true
 z_index = 1
@@ -56,10 +63,3 @@ position = Vector2(0, -30)
 [node name="RopeController" parent="RopeMarker" unique_id=1910049717 instance=ExtResource("5_axc4k")]
 length = 600.0
 gravity = Vector2(0, -90)
-
-[node name="HarpoonGlow" type="PointLight2D" parent="." unique_id=2056863213]
-position = Vector2(0, 24)
-color = Color(1, 0.85, 0.5, 1)
-energy = 0.0
-texture = ExtResource("5_cvga1")
-texture_scale = 2.0

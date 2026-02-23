@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var dive_speed = 400.0
 @export var retract_speed = 6000.0
-@export var steering_speed = 3.0
+@export var steering_speed = 4.0
 @export var max_turn_rad = deg_to_rad(25.0)
 @export var max_kept_fish: int = 50
 
@@ -16,7 +16,7 @@ var dangling_fish_scene = preload("res://fish/dangling_fish.tscn")
 @onready var rope_controller = $RopeMarker/RopeController
 @onready var start_position = global_position
 @onready var large_bubbles: GPUParticles2D = $LargeBubbles
-@onready var harpoon_glow: PointLight2D = $HarpoonGlow
+@onready var harpoon_glow: PointLight2D = $CollisionPolygon2D/HarpoonGlow
 const LARGE_BUBBLES_OFFSET_Y: float = 437.0
 
 # Baseline bubble trail values
