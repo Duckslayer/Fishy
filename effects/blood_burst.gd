@@ -2,7 +2,7 @@ extends GPUParticles2D
 
 func _ready() -> void:
 	# Scale particle count and size based on current intensity
-	var i = GameEvents.intensity
+	var i = IntensityManager.intensity
 	amount = int(lerp(20.0, 50.0, i))
 	
 	var mat := process_material as ParticleProcessMaterial

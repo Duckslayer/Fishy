@@ -1,23 +1,23 @@
 extends Node2D
 
-@export var fish_scenes : Array[PackedScene]
-var number_of_fish = 8
+@export var fish_scenes: Array[PackedScene]
+@export var number_of_fish: int = 8
+@export var speed_range: Vector2 = Vector2(0.6, 1.5)
+@export var size_range: Vector2 = Vector2(0.7, 1.3)
+@export var min_depth: float = 100.0
+@export var spawn_root: Node
 
-# Speed and size randomisation ranges
-var speed_range := Vector2(0.6, 1.5)
-var size_range := Vector2(0.7, 1.3)
+func spawn_fish() -> void:
+	var fish: BaseFish = fish_scenes.pick_random().instantiate()
 
-func spawn_fish():
-	var fish = fish_scenes.pick_random().instantiate()
-
-	var camera = get_viewport().get_camera_2d()
-	var cam_pos = camera.global_position
-	var viewport_size = get_viewport_rect().size / camera.zoom
-	var half_w = viewport_size.x / 2.0
-	var half_h = viewport_size.y / 2.0
+	var camera := get_viewport().get_camera_2d()
+	var cam_pos := camera.global_position
+	var viewport_size := get_viewport_rect().size / camera.zoom
+	var half_w := viewport_size.x / 2.0
+	var half_h := viewport_size.y / 2.0
 
 	# Randomly pick a spawn zone: left, right, or below
-	var zone = randi() % 3
+	var zone := randi() % 3
 	var x: float
 	var y: float
 	var facing_right: bool
@@ -36,8 +36,8 @@ func spawn_fish():
 			y = cam_pos.y + half_h + randf_range(200, 800)
 			facing_right = randf() > 0.5
 
-	# Never spawn above the water surface (y = 0)
-	y = max(y, 100.0)
+	# Never spawn above the water surface
+	y = max(y, min_depth)
 
 	fish.global_position = Vector2(x, y)
 
@@ -48,7 +48,8 @@ func spawn_fish():
 	fish.speed *= randf_range(speed_range.x, speed_range.y)
 	fish.size_scale = randf_range(size_range.x, size_range.y)
 
-	get_parent().get_parent().add_child(fish)
+	var root := spawn_root if spawn_root else get_parent().get_parent()
+	root.add_child(fish)
 
 func _on_timer_timeout() -> void:
 	for i in range(number_of_fish):

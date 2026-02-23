@@ -8,13 +8,6 @@
 
 config_version=5
 
-[display]
-
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
-
 [animation]
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
@@ -30,6 +23,13 @@ config/icon="res://icon.svg"
 
 GDAIMCPRuntime="*uid://dcne7ryelpxmn"
 GameEvents="*uid://slgktbyo6mx8"
+IntensityManager="*res://intensity_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 

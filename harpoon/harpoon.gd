@@ -1,117 +1,20 @@
 extends CharacterBody2D
 
-@export var dive_speed = 400.0
-@export var retract_speed = 6000.0
-@export var steering_speed = 4.0
-@export var max_turn_rad = deg_to_rad(25.0)
-@export var max_kept_fish: int = 50
+@export var dive_speed: float = 400.0
+@export var retract_speed: float = 6000.0
+@export var steering_speed: float = 4.0
+@export var max_turn_rad: float = deg_to_rad(25.0)
+@export var max_depth: float = 10000.0
 
 enum State { IDLE, DIVING, RETRACTING }
-var current_state = State.IDLE
-
-var dangling_fish_scene = preload("res://fish/dangling_fish.tscn")
+var current_state: State = State.IDLE
 
 @onready var trail_particles: GPUParticles2D = $TrailBubblesParticles
-@onready var trail_material: ParticleProcessMaterial = trail_particles.process_material
-@onready var rope_controller = $RopeMarker/RopeController
-@onready var start_position = global_position
+@onready var rope_controller: Node2D = $RopeMarker/RopeController
+@onready var start_position: Vector2 = global_position
 @onready var large_bubbles: GPUParticles2D = $LargeBubbles
-@onready var harpoon_glow: PointLight2D = $HeadSprite/HarpoonGlow
-@onready var harpoon_sprite_mat: ShaderMaterial = $HeadSprite.material
+@onready var fish_collection: Node = $FishCollection
 const LARGE_BUBBLES_OFFSET_Y: float = 437.0
-
-# Baseline bubble trail values
-var base_ratio: float = 0.25  # 15/60 — baseline fraction of max particles
-var base_scale_max: float = 0.2
-var max_scale_max: float = 0.5
-var base_velocity_max: float = 41.0
-var max_velocity_max: float = 120.0
-
-# Track the tween appearances (temporary) and the dangling bodies (persistent)
-var impaled_fish: Array[Node2D] = []
-var dangling_fish: Array[Node] = []  # RigidBody2D instances + PinJoint2D instances
-var glow_tween: Tween = null
-var current_sprite_glow: float = 0.0
-
-# Energy targets per tier: CALM=0, HEATED=1.5, RAMPAGE=2.5, FRENZY=4.0
-const TIER_GLOW_ENERGY: Array[float] = [0.0, 1.5, 2.5, 4.0]
-# Shader glow_intensity per tier: CALM=0, HEATED=0.4, RAMPAGE=0.7, FRENZY=1.0
-const TIER_SPRITE_GLOW: Array[float] = [0.0, 0.4, 0.7, 1.0]
-
-func _ready() -> void:
-	# Pre-allocate max particles so we never reallocate mid-emit
-	trail_particles.amount = 60
-	trail_particles.amount_ratio = base_ratio
-	GameEvents.intensity_changed.connect(_on_intensity_changed)
-	GameEvents.fish_impaled.connect(_on_fish_impaled)
-	GameEvents.tier_changed.connect(_on_tier_changed)
-
-func _on_fish_impaled(appearance: Node2D) -> void:
-	# Adopt the fish's visual as a child of the harpoon
-	add_child(appearance)
-	# Random offset near the harpoon tip so multiple fish don't perfectly overlap
-	appearance.position = %CollisionPolygon2D.position + Vector2(randf_range(-8, 8), randf_range(-5, 15))
-	appearance.rotation = randf_range(-0.3, 0.3)
-	impaled_fish.append(appearance)
-	
-	var fish_length = appearance.get_node("Body").texture.get_width() * appearance.scale.x
-	var direction = (%RopeMarker.position - appearance.position).normalized()
-	
-	# Slide to rope marker and fade out (existing tween)
-	var tween = create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(appearance, "position", %RopeMarker.position + (direction * fish_length * 0.4), 0.2)
-	tween.tween_property(appearance, "rotation", PI / 2, 0.2)
-	
-	tween.finished.connect(func():
-		if is_instance_valid(appearance):
-			# Spawn the dangling physics fish before freeing the tween appearance
-			_spawn_dangling_fish(appearance)
-			appearance.queue_free()
-			impaled_fish.erase(appearance)
-	)
-
-func _spawn_dangling_fish(appearance: Node2D) -> void:
-	var fish_body: RigidBody2D = dangling_fish_scene.instantiate()
-	fish_body.setup(appearance)
-	
-	var fish_length = appearance.get_node("Body").texture.get_width() * appearance.scale.x
-	var direction = (appearance.position - %RopeMarker.position).normalized()
-	
-	# Add as child of the harpoon so it moves with us
-	add_child(fish_body)
-	fish_body.position = %RopeMarker.position + (direction * fish_length * 0.4)
-	fish_body.rotation = appearance.rotation
-	
-	# Create a PinJoint2D to attach at the rope marker
-	var pin = PinJoint2D.new()
-	add_child(pin)
-	pin.position = %RopeMarker.position
-	pin.node_a = get_path()
-	pin.node_b = fish_body.get_path()
-	pin.softness = 1.0
-	
-	dangling_fish.append(fish_body)
-	dangling_fish.append(pin)
-
-func _on_tier_changed(new_tier: int, _old_tier: int) -> void:
-	var target_energy: float = TIER_GLOW_ENERGY[new_tier]
-	var target_sprite_glow: float = TIER_SPRITE_GLOW[new_tier]
-	if glow_tween and glow_tween.is_valid():
-		glow_tween.kill()
-	glow_tween = create_tween().set_parallel(true)
-	glow_tween.tween_property(harpoon_glow, "energy", target_energy, 0.3).set_ease(Tween.EASE_OUT)
-	glow_tween.tween_method(_set_sprite_glow, current_sprite_glow, target_sprite_glow, 0.3).set_ease(Tween.EASE_OUT)
-
-func _set_sprite_glow(value: float) -> void:
-	current_sprite_glow = value
-	harpoon_sprite_mat.set_shader_parameter("glow_intensity", value)
-
-func _on_intensity_changed(value: float) -> void:
-	# amount_ratio (0.0–1.0) controls density without restarting the particle system
-	trail_particles.amount_ratio = lerp(base_ratio, 1.0, value)
-	trail_material.scale_max = lerp(base_scale_max, max_scale_max, value)
-	trail_material.initial_velocity_max = lerp(base_velocity_max, max_velocity_max, value)
 
 func _physics_process(delta: float) -> void:
 	match current_state:
@@ -121,61 +24,50 @@ func _physics_process(delta: float) -> void:
 			handle_diving(delta)
 		State.RETRACTING:
 			handle_retracting(delta)
-	
-	# Keep LargeBubbles upright and directly below the harpoon,
-	# regardless of harpoon rotation
+
+	# Keep LargeBubbles upright and directly below the harpoon
 	large_bubbles.global_rotation = 0.0
 	large_bubbles.global_position = global_position + Vector2(0, LARGE_BUBBLES_OFFSET_Y)
-			
-func handle_idle_input(delta):
+
+func handle_idle_input(delta: float) -> void:
 	turn(delta)
 	move_and_slide()
-	
+
 	if Input.is_action_just_pressed("Launch"):
 		current_state = State.DIVING
 		trail_particles.emitting = true
 		start_position = global_position
 		rope_controller.set_rope_state(rope_controller.RopeState.SIMULATING)
-		GameEvents.reset_combo()
+		IntensityManager.reset_combo()
 
-func handle_diving(delta):
+func handle_diving(delta: float) -> void:
 	turn(delta)
-	
 	velocity = Vector2.DOWN.rotated(rotation) * dive_speed
-	
 	move_and_slide()
-	
-	if global_position.y > 10000:
+
+	if global_position.y > max_depth:
 		return_to_boat()
 
-func handle_retracting(delta):
+func handle_retracting(delta: float) -> void:
 	global_position = global_position.move_toward(start_position, retract_speed * delta)
 	rotation = move_toward(rotation, 0.0, steering_speed * delta)
-	# Once we reach the top, reset
+
 	if global_position.distance_to(start_position) < 1.0:
 		current_state = State.IDLE
 		trail_particles.emitting = false
-		rotation = 0 # Ensure perfectly straight
+		rotation = 0
 		global_position = start_position
 		rope_controller.set_rope_state(rope_controller.RopeState.HIDDEN)
-		# Clean up any remaining tween appearances (shouldn't normally be any)
-		for fish_vis in impaled_fish:
-			if is_instance_valid(fish_vis):
-				fish_vis.queue_free()
-		impaled_fish.clear()
-		# Dangling fish persist — they stay attached and come back up with the harpoon
-		
-func turn(delta):
-	var turn_dir = Input.get_axis("Right", "Left")
-	
+		fish_collection.clear_tweened_fish()
+
+func turn(delta: float) -> void:
+	var turn_dir := Input.get_axis("Right", "Left")
 	if turn_dir:
 		rotation += turn_dir * steering_speed * delta
 	rotation = clamp(rotation, -max_turn_rad, max_turn_rad)
-	
 
-func return_to_boat():
+func return_to_boat() -> void:
 	if current_state == State.DIVING:
 		current_state = State.RETRACTING
-		velocity = Vector2(0,0)
+		velocity = Vector2.ZERO
 		rope_controller.set_rope_state(rope_controller.RopeState.TAUT)
-		# You can add "Juice" here later: sound effects, camera shake, etc.

@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bx7ipix1pbgbw" path="res://kenney_fish-pack_2/Vector/bubble_b.svg" id="3_0v313"]
 [ext_resource type="PackedScene" uid="uid://0v6ktdjfkgnt" path="res://rope/rope_controller.tscn" id="5_axc4k"]
 [ext_resource type="Texture2D" uid="uid://cptgxq2lplwe4" path="res://effects/glow_texture.tres" id="5_cvga1"]
+[ext_resource type="Script" path="res://harpoon/fish_collection.gd" id="7_mynk6"]
+[ext_resource type="Script" path="res://harpoon/harpoon_effects.gd" id="8_cwi3x"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cvga1"]
 shader = ExtResource("2_x8ecc")
@@ -83,3 +85,9 @@ position = Vector2(0, -30)
 [node name="RopeController" parent="RopeMarker" unique_id=1910049717 instance=ExtResource("5_axc4k")]
 length = 600.0
 gravity = Vector2(0, -90)
+
+[node name="FishCollection" type="Node" parent="." unique_id=1346351518]
+script = ExtResource("7_mynk6")
+
+[node name="HarpoonEffects" type="Node" parent="." unique_id=931542303]
+script = ExtResource("8_cwi3x")
