@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bunm3ffkiabq2"]
 
 [ext_resource type="Texture2D" uid="uid://bla1arrngrcy5" path="res://kenney_fish-pack_2/Vector/fish_blue.svg" id="1_jx7ej"]
-[ext_resource type="Script" uid="uid://csdn2ov4l507m" path="res://fish/basic_fish.gd" id="1_sgogb"]
+[ext_resource type="Script" uid="uid://csdn2ov4l507m" path="res://fish/basic_fish/basic_fish.gd" id="1_sgogb"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pxh1u"]
 radius = 17.0
