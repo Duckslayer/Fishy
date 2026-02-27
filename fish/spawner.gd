@@ -1,23 +1,21 @@
 extends Node2D
 
-@export var fish_scenes: Array[PackedScene]
 @export var number_of_fish: int = 8
 @export var speed_range: Vector2 = Vector2(0.6, 1.5)
 @export var size_range: Vector2 = Vector2(0.7, 1.3)
 @export var min_depth: float = 100.0
 @export var spawn_root: Node
-
-var basic_fish = preload("uid://bunm3ffkiabq2")
-var shark = preload("uid://dhs6f6dnqp7vl")
-
-var fish_deck: Array[Resource]
+@export var level: BaseLevel
 
 func _ready() -> void:
-	fish_deck.append(basic_fish)
+	if not level:
+		level = LevelOne.new()
 
 func spawn_fish() -> void:
-	
-	var fish: BaseFish = draw_fish()
+	var depth := get_depth()
+	var scene := level.draw_fish(depth)
+	var fish: BaseFish = scene.instantiate()
+	var margin := level.get_spawn_margin(scene)
 
 	var camera := get_viewport().get_camera_2d()
 	var cam_pos := camera.global_position
@@ -33,16 +31,16 @@ func spawn_fish() -> void:
 
 	match zone:
 		0: # Left side
-			x = cam_pos.x - half_w - randf_range(50, 300)
+			x = cam_pos.x - half_w - margin - randf_range(0, 100)
 			y = max(0.0, cam_pos.y - half_h) + randf_range(100, half_h * 2.0)
 			facing_right = true
 		1: # Right side
-			x = cam_pos.x + half_w + randf_range(50, 300)
+			x = cam_pos.x + half_w + margin + randf_range(0, 100)
 			y = max(0.0, cam_pos.y - half_h) + randf_range(100, half_h * 2.0)
 			facing_right = false
 		2: # Below
 			x = cam_pos.x + randf_range(-half_w, half_w)
-			y = cam_pos.y + half_h + randf_range(200, 800)
+			y = cam_pos.y + half_h + margin + randf_range(0, 200)
 			facing_right = randf() > 0.5
 
 	# Never spawn above the water surface
@@ -59,14 +57,8 @@ func spawn_fish() -> void:
 
 	var root := spawn_root if spawn_root else get_parent().get_parent()
 	root.add_child(fish)
-	
-func draw_fish() -> BaseFish:
-	if get_depth() < 1000:
-		return basic_fish.instantiate()
-		
-	return shark.instantiate()
-	
-func get_depth() -> int:
+
+func get_depth() -> float:
 	var camera := get_viewport().get_camera_2d()
 	var cam_pos := camera.global_position
 	return cam_pos.y
