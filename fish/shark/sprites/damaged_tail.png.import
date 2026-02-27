@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sue8snbmycc7"
-path="res://.godot/imported/flesh.png-ab6752349dc114f6c90aa647b9f3a418.ctex"
+uid="uid://rsbwokinj4ww"
+path="res://.godot/imported/damaged_tail.png-02c1e3d1f8ee00c34091dca8c211344c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fish/shark/flesh.png"
-dest_files=["res://.godot/imported/flesh.png-ab6752349dc114f6c90aa647b9f3a418.ctex"]
+source_file="res://fish/shark/sprites/damaged_tail.png"
+dest_files=["res://.godot/imported/damaged_tail.png-02c1e3d1f8ee00c34091dca8c211344c.ctex"]
 
 [params]
 

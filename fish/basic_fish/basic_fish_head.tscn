@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cgwuvoem13jj0"]
 
-[ext_resource type="Texture2D" uid="uid://832sm5h7haue" path="res://fish/basic_fish/fish_blue_head.svg" id="1_jl5cn"]
+[ext_resource type="Texture2D" uid="uid://832sm5h7haue" path="res://fish/basic_fish/sprites/fish_blue_head.svg" id="1_jl5cn"]
 
 [node name="BasicFishHead" type="Node2D" unique_id=1886422531]
 

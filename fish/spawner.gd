@@ -7,8 +7,17 @@ extends Node2D
 @export var min_depth: float = 100.0
 @export var spawn_root: Node
 
+var basic_fish = preload("uid://bunm3ffkiabq2")
+var shark = preload("uid://dhs6f6dnqp7vl")
+
+var fish_deck: Array[Resource]
+
+func _ready() -> void:
+	fish_deck.append(basic_fish)
+
 func spawn_fish() -> void:
-	var fish: BaseFish = fish_scenes.pick_random().instantiate()
+	
+	var fish: BaseFish = draw_fish()
 
 	var camera := get_viewport().get_camera_2d()
 	var cam_pos := camera.global_position
@@ -50,6 +59,17 @@ func spawn_fish() -> void:
 
 	var root := spawn_root if spawn_root else get_parent().get_parent()
 	root.add_child(fish)
+	
+func draw_fish() -> BaseFish:
+	if get_depth() < 1000:
+		return basic_fish.instantiate()
+		
+	return shark.instantiate()
+	
+func get_depth() -> int:
+	var camera := get_viewport().get_camera_2d()
+	var cam_pos := camera.global_position
+	return cam_pos.y
 
 func _on_timer_timeout() -> void:
 	for i in range(number_of_fish):

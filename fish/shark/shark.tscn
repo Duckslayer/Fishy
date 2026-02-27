@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://dhs6f6dnqp7vl"]
+
+[ext_resource type="Script" uid="uid://jvbf7tnrdeio" path="res://fish/shark/shark.gd" id="1_0uy1w"]
+[ext_resource type="Texture2D" uid="uid://snspeki5fic6" path="res://fish/shark/sprites/shark.png" id="2_hsvkq"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0uy1w"]
+radius = 90.0
+height = 508.0
+
+[sub_resource type="Animation" id="Animation_hsvkq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tail:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_3eid0"]
+resource_name = "swim"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Tail:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1), Vector2(0.7, 1), Vector2(0.8, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_40to8"]
+_data = {
+&"RESET": SubResource("Animation_hsvkq"),
+&"swim": SubResource("Animation_3eid0")
+}
+
+[node name="Shark" type="Area2D" unique_id=619737366]
+collision_mask = 2
+script = ExtResource("1_0uy1w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=368202328]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_0uy1w")
+
+[node name="Appearance" type="Node2D" parent="." unique_id=1726127288]
+
+[node name="Tail" type="Sprite2D" parent="Appearance" unique_id=427313066]
+position = Vector2(-114, -2)
+texture = ExtResource("2_hsvkq")
+offset = Vector2(-85, 0)
+region_enabled = true
+region_rect = Rect2(0, 0, 170, 229)
+
+[node name="Body" type="Sprite2D" parent="Appearance" unique_id=940809393]
+position = Vector2(87, -2)
+texture = ExtResource("2_hsvkq")
+region_enabled = true
+region_rect = Rect2(170, 0, 403, 229)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=773119872]
+root_node = NodePath("../Appearance")
+libraries/ = SubResource("AnimationLibrary_40to8")
+autoplay = &"swim"
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=2071240183]
+wait_time = 30.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

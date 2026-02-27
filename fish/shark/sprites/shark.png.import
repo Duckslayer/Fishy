@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://832sm5h7haue"
-path="res://.godot/imported/fish_blue_head.svg-b75f26cffd6f663f7b31d609ff7e73ac.ctex"
+uid="uid://snspeki5fic6"
+path="res://.godot/imported/shark.png-c01b92c6cfd0d07bd2970819c6d3be15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fish/basic_fish/fish_blue_head.svg"
-dest_files=["res://.godot/imported/fish_blue_head.svg-b75f26cffd6f663f7b31d609ff7e73ac.ctex"]
+source_file="res://fish/shark/sprites/shark.png"
+dest_files=["res://.godot/imported/shark.png-c01b92c6cfd0d07bd2970819c6d3be15.ctex"]
 
 [params]
 
@@ -38,6 +38,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

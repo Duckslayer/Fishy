@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rsbwokinj4ww"
-path="res://.godot/imported/damaged_tail.png-b0e5989e79361bf97a57159bd12f0929.ctex"
+uid="uid://n687g5bc5mub"
+path="res://.godot/imported/guts.png-b947608e945c368001c94a567361d5cc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fish/shark/damaged_tail.png"
-dest_files=["res://.godot/imported/damaged_tail.png-b0e5989e79361bf97a57159bd12f0929.ctex"]
+source_file="res://fish/chunks/guts.png"
+dest_files=["res://.godot/imported/guts.png-b947608e945c368001c94a567361d5cc.ctex"]
 
 [params]
 
