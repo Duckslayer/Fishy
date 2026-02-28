@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bljvx6b6fxm76"]
+
+[ext_resource type="Texture2D" uid="uid://0ugyfyy5cc76" path="res://fish/shark/sprites/damaged_shark.png" id="1_2u67c"]
+
+[node name="DamagedShark" type="Node2D" unique_id=405659778]
+
+[node name="Body" type="Sprite2D" parent="." unique_id=1120788352]
+texture = ExtResource("1_2u67c")

@@ -78,9 +78,17 @@ func clear_tweened_fish() -> void:
 	impaled_fish.clear()
 	
 func damage_fish_appearance(appearance: Node2D) -> Node2D:
-	#if tier < 1:
-		#return appearance
+	# Check if this fish has custom damaged scenes (e.g. shark)
+	if appearance.has_meta("damaged_scenes"):
+		var scenes: Array = appearance.get_meta("damaged_scenes")
+		# Pick scene based on tier: index 0 = low tier, index 1 = high tier (tier >= 2)
+		var scene_index: int = 1 if tier >= 2 else 0
+		scene_index = clampi(scene_index, 0, scenes.size() - 1)
+		var damaged_appearance = scenes[scene_index].instantiate()
+		damaged_appearance.scale = appearance.scale
+		return damaged_appearance
+	
+	# Default: use fish head for basic fish
 	var damaged_appearance = fish_head.instantiate()
 	damaged_appearance.scale = appearance.scale
-	
 	return damaged_appearance

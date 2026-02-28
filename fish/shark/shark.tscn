@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://snspeki5fic6" path="res://fish/shark/sprites/shark.png" id="2_hsvkq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0uy1w"]
-radius = 90.0
-height = 508.0
+radius = 45.0
+height = 254.0
 
 [sub_resource type="Animation" id="Animation_hsvkq"]
 length = 0.001
