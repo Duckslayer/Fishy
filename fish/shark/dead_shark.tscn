@@ -1,5 +1,8 @@
 [gd_scene format=3 uid="uid://dors705mkk6p6"]
 
+[ext_resource type="Texture2D" uid="uid://dsd1tqlpu2ifm" path="res://fish/shark/sprites/dead_shark.png" id="1_d4pcv"]
+
 [node name="DeadShark" type="Node2D" unique_id=516819579]
 
 [node name="Body" type="Sprite2D" parent="." unique_id=2105166607]
+texture = ExtResource("1_d4pcv")

@@ -85,7 +85,24 @@ func damage_fish_appearance(appearance: Node2D) -> Node2D:
 		var scene_index: int = 1 if tier >= 2 else 0
 		scene_index = clampi(scene_index, 0, scenes.size() - 1)
 		var damaged_appearance = scenes[scene_index].instantiate()
-		damaged_appearance.scale = appearance.scale
+		
+		var original_body: Sprite2D = appearance.get_node_or_null("Body")
+		var damaged_body: Sprite2D = damaged_appearance.get_node_or_null("Body")
+		
+		if original_body and damaged_body and original_body.texture and damaged_body.texture:
+			var orig_width = float(original_body.get_rect().size.x * original_body.scale.x)
+			var damaged_width = float(damaged_body.get_rect().size.x * damaged_body.scale.x)
+			var ratio = orig_width / damaged_width
+			
+			if scene_index == 1:
+				ratio *= 0.8
+				
+			damaged_appearance.scale = appearance.scale * ratio
+			print("CALCULATED RATIO: ", ratio, " FINAL SCALE: ", damaged_appearance.scale)
+		else:
+			damaged_appearance.scale = appearance.scale
+			print("FALLBACK SCALE: ", damaged_appearance.scale)
+			
 		return damaged_appearance
 	
 	# Default: use fish head for basic fish

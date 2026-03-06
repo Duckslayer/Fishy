@@ -21,9 +21,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GDAIMCPRuntime="*uid://dcne7ryelpxmn"
 GameEvents="*uid://slgktbyo6mx8"
 IntensityManager="*res://intensity_manager.gd"
+GDAIMCPRuntime="*uid://dcne7ryelpxmn"
 
 [display]
 

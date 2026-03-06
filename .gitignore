@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+addons/gdai-mcp-plugin-godot/__pycache__/antigravity_windows_fix.cpython-313.pyc

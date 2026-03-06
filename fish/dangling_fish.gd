@@ -4,14 +4,15 @@ extends RigidBody2D
 ## Gravity-neutral, responds to harpoon movement via PinJoint2D.
 
 func setup(appearance: Node2D) -> void:
-	# Copy the visual sprites from the original appearance
+	var appearance_node = Node2D.new()
+	appearance_node.name = "Appearance"
+	appearance_node.scale = appearance.scale
+	add_child(appearance_node)
+	
 	for child in appearance.get_children():
 		if child is Sprite2D:
 			var sprite_copy = child.duplicate()
-			add_child(sprite_copy)
-
-	# Match the original scale
-	scale = appearance.scale
+			appearance_node.add_child(sprite_copy)
 
 func _ready() -> void:
 	# No gameplay collisions — physics body only for joint simulation
